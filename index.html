@@ -798,6 +798,7 @@
         import { initCalendar } from '/calendar-integration.js';
 
         document.addEventListener('DOMContentLoaded', () => {
+            initCalendar();
             const user = getCurrentUser();
             const userSection = document.getElementById('userSection');
             const loginBtn = document.getElementById('loginBtn');

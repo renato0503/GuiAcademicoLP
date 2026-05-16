@@ -19,3 +19,15 @@ export async function scheduleDiagnostic(clientName, clientEmail, preferredDate)
         fallbackLink: calendlyLink 
     };
 }
+
+/**
+ * Inicializa os ouvintes de evento para os botões de diagnóstico.
+ */
+export function initCalendar() {
+    document.querySelectorAll('a[href="#diagnostico"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            console.log("Iniciando fluxo de diagnóstico...");
+            // O formulário de diagnóstico já lida com isso, mas podemos adicionar lógica extra aqui se necessário.
+        });
+    });
+}
