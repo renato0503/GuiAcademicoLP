@@ -279,6 +279,16 @@
         [data-reveal] { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         [data-reveal].active { opacity: 1; transform: translateY(0); }
 
+        /* Modal Login */
+        .modal {
+            display: none; position: fixed; z-index: 2000; left: 0; top: 0; 
+            width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            background: #fff; margin: 10% auto; padding: 2.5rem; border-radius: 16px;
+            max-width: 450px; position: relative; box-shadow: var(--shadow);
+        }
+        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 1.5rem; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -296,7 +306,10 @@
                 <a href="#metodologias">Metodologias</a>
                 <a href="#como-funciona">Como Funciona</a>
                 <a href="#faq">FAQ</a>
-                <a href="#diagnostico" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">Solicitar Proposta</a>
+                <div id="userSection" style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="loginBtn" class="btn btn-outline" style="padding: 0.6rem 1.2rem;">Área do Aluno</button>
+                    <a href="#diagnostico" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">Solicitar Proposta</a>
+                </div>
             </nav>
             <button class="mobile-menu-btn btn">
                 <span class="material-symbols-outlined">menu</span>
@@ -707,6 +720,98 @@
             <div>Desenvolvido com Rigor Científico.</div>
         </div>
     </footer>
+
+    <!-- MODAL DE LOGIN -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal material-symbols-outlined">close</span>
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <img src="logo3d.png" alt="Logo" style="height: 60px; margin: 0 auto 1rem;">
+                <h3 style="font-size: 1.5rem;">Acesso à Área do Cliente</h3>
+                <p class="text-muted" style="font-size: 0.9rem;">Entre com seu CPF para ver seus projetos.</p>
+            </div>
+            
+            <form id="cpfLoginForm">
+                <div class="form-group">
+                    <label>Seu CPF (apenas números)</label>
+                    <input type="text" id="loginCpf" maxlength="11" pattern="\d{11}" required placeholder="Ex: 00000000000">
+                </div>
+                
+                <div id="newUserFields" style="display:none; margin-top: 1rem;">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" id="loginNome" placeholder="Seu nome completo">
+                    </div>
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>WhatsApp (com DDD)</label>
+                        <input type="tel" id="loginWhats" placeholder="Ex: 5567999999999">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2rem;">Continuar</button>
+            </form>
+            <p class="text-muted" style="font-size:0.75rem; text-align: center; margin-top: 1.5rem;">
+                Seu CPF é seu identificador único. Dados protegidos por LGPD.
+            </p>
+        </div>
+    </div>
+
+    <script type="module">
+        import { loginWithCPF, getCurrentUser, logout } from './auth-cpf.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = getCurrentUser();
+            const userSection = document.getElementById('userSection');
+            const loginBtn = document.getElementById('loginBtn');
+
+            if (user) {
+                userSection.innerHTML = `
+                    <div style="display: flex; flex-direction: column; align-items: flex-end;">
+                        <span style="font-size: 0.8rem; font-weight: 600;">Olá, ${user.nome.split(' ')[0]}</span>
+                        <a href="${user.role === 'admin' ? 'admin.html' : 'dashboard.html'}" style="font-size: 0.75rem; color: var(--accent); text-decoration: underline;">Painel de Controle</a>
+                    </div>
+                    <button id="logoutBtn" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; margin-left: 10px;">Sair</button>
+                    <a href="#diagnostico" class="btn btn-primary" style="padding: 0.6rem 1.2rem; margin-left: 10px;">Nova Proposta</a>
+                `;
+                document.getElementById('logoutBtn').addEventListener('click', logout);
+            }
+
+            // Modal Logic
+            const modal = document.getElementById('loginModal');
+            const closeBtn = document.querySelector('.close-modal');
+            const newUserFields = document.getElementById('newUserFields');
+            const loginForm = document.getElementById('cpfLoginForm');
+
+            if (loginBtn) {
+                loginBtn.onclick = () => modal.style.display = "block";
+            }
+            closeBtn.onclick = () => modal.style.display = "none";
+            window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+
+            loginForm.onsubmit = async (e) => {
+                e.preventDefault();
+                const cpf = document.getElementById('loginCpf').value;
+                const nome = document.getElementById('loginNome').value;
+                const whats = document.getElementById('loginWhats').value;
+
+                try {
+                    const res = await loginWithCPF(cpf, nome, whats);
+                    if (res.success) {
+                        window.location.href = res.user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+                    }
+                } catch (error) {
+                    if (error.message.includes('Cadastro necessário')) {
+                        newUserFields.style.display = 'block';
+                        document.getElementById('loginNome').required = true;
+                        document.getElementById('loginWhats').required = true;
+                        alert("Não encontramos seu CPF. Por favor, complete o cadastro para continuar.");
+                    } else {
+                        alert(error.message);
+                    }
+                }
+            };
+        });
+    </script>
 
     <!-- JAVASCRIPT MÍNIMO -->
     <script>

@@ -1,19 +1,24 @@
-## 🗺️ Roadmap de Implementação
+## 🗺️ Roadmap de Implementação - Firebase
 
 ### 📋 Backlog Prioritário
-- [ ] Substituir placeholders de imagem por assets reais (Ex: Icons específicos para Metodologias) [Prioridade: Alta]
-- [ ] Configurar FormSubmit ou backend para recebimento de propostas (API de WhatsApp integrada) [Prioridade: Alta]
-- [ ] Criar página de Política de Privacidade detalhada para link `[LINK_POLITICA_PRIVACIDADE]` [Prioridade: Média]
-- [ ] Otimizar imagens para webp visando melhor performance (Lighthouse > 90) [Prioridade: Média]
+- [ ] Testar fluxo completo de login CPF -> Triagem -> Upload [Prioridade: Crítica]
+- [ ] Implementar feedback visual (loader) durante login e uploads [Prioridade: Alta]
+- [ ] Aplicar máscara de CPF e telefone nos formulários [Prioridade: Alta]
+- [ ] Validar tamanho dos arquivos no upload (máx 25MB) [Prioridade: Média]
+- [ ] Criar página de erro 404 personalizada no Firebase Hosting [Prioridade: Baixa]
 
 ### 🔌 Integrações Pendentes
-- [ ] `[LINK_CHECKOUT]` → Configurar link de pagamento Infinity Pay conforme orçamento negociado.
-- [ ] `[LINK_CALENDLY]` → Vincular conta do Calendly para agendamento automático.
-- [ ] `[LINK_AREA_CLIENTE]` → Configurar portal do aluno no Notion ou Dubsado.
-- [ ] `[LINK_LEADMAGNET]` → Hospedar o PDF do Checklist ABNT 2024 e vincular ao formulário.
+- [ ] `[LINK_CHECKOUT]` → Integrar link de pagamento após aceite da proposta.
+- [ ] `[LINK_CALENDLY]` → Substituir o link no `calendar-integration.js`.
+- [ ] `[LINK_AREA_CLIENTE]` → Apontar para `/dashboard.html`.
 
 ### 🧪 Testes & Validação
-- [ ] Teste responsivo completo em 320px (iPhone SE) até 1440px (UltraWide).
-- [ ] Validação de formulário: obrigatoriedade do checkbox LGPD.
-- [ ] Teste de acessibilidade: leitura por screen readers e contraste AA nos botões.
-- [ ] Verificação de kerning e line-height em dispositivos móveis Android/iOS.
+- [ ] Teste de Segurança: Verificar se cliente consegue acessar projeto de outro cliente.
+- [ ] Teste Admin: Confirmar se CPF 05930662193 vê todos os leads.
+- [ ] Teste Mobile: Garantir que as tabelas de dashboard não quebrem em telas pequenas.
+
+### 📦 Deploy Checklist
+1. `firebase login`
+2. `firebase use guiacademicostorage`
+3. `firebase deploy`
+4. Verificar logs no console do Firebase para erros de segurança.

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard do Cliente | Guia Acadêmico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        :root {
+            --primary: #0F172A;
+            --accent: #EAB308;
+            --bg: #F8FAFC;
+            --card: #FFFFFF;
+            --border: #E2E8F0;
+            --text: #1E293B;
+            --muted: #64748B;
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        header { background: #fff; border-bottom: 1px solid var(--border); padding: 1rem 0; position: sticky; top: 0; z-index: 100; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo img { height: 40px; }
+        
+        .welcome-sec { padding: 3rem 0; }
+        .grid { display: grid; gap: 2rem; }
+        @media (min-width: 768px) { .grid-2 { grid-template-columns: repeat(2, 1fr); } .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+        .card { background: var(--card); padding: 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        .status-triagem { background: #FEF9C3; color: #854D0E; }
+        
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.8rem 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.3s; border: none; }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-outline { border: 2px solid var(--primary); color: var(--primary); background: transparent; }
+        
+        .form-group { margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+        input, select, textarea { padding: 0.8rem; border: 1px solid var(--border); border-radius: 8px; background: #f8fafc; font-family: inherit; }
+        
+        .doc-list { margin-top: 1rem; }
+        .doc-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; border-bottom: 1px solid var(--border); }
+        
+        #loadingOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); display: none; justify-content: center; align-items: center; z-index: 1000; }
+    </style>
+</head>
+<body>
+
+    <div id="loadingOverlay">
+        <div style="text-align: center;">
+            <span class="material-symbols-outlined" style="font-size: 3rem; animation: rotate 2s linear infinite;">sync</span>
+            <p>Processando...</p>
+        </div>
+    </div>
+
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo"><img src="logo3d.png" alt="Logo"></a>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <span id="userName" style="font-weight: 600;">Carregando...</span>
+                <button onclick="handleLogout()" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Sair</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="welcome-sec">
+            <h1 id="welcomeTitle">Bem-vindo à sua Área do Aluno</h1>
+            <p class="text-muted">Acompanhe seus projetos e envie documentos para análise.</p>
+        </section>
+
+        <div class="grid grid-2">
+            <!-- MEUS PROJETOS -->
+            <section>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2>Meus Projetos</h2>
+                </div>
+                <div id="projectList" class="grid" style="grid-template-columns: 1fr;">
+                    <div class="card">Carregando seus projetos...</div>
+                </div>
+            </section>
+
+            <!-- NOVO PROJETO / TRIAGEM -->
+            <section>
+                <h2>Solicitar Nova Consultoria</h2>
+                <div class="card" style="margin-top: 1.5rem;">
+                    <form id="newProjectForm">
+                        <div class="form-group">
+                            <label>Serviço de Interesse</label>
+                            <select id="servico" required>
+                                <option value="Orientação Metodológica">Orientação Metodológica</option>
+                                <option value="Análise de Dados Estatística">Análise de Dados Estatística</option>
+                                <option value="Análise Qualitativa">Análise Qualitativa Avançada</option>
+                                <option value="Web Scraping">Mineração & Web Scraping</option>
+                                <option value="IA Acadêmica">IA Acadêmica & NLP</option>
+                            </select>
+                        </div>
+                        <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="form-group">
+                                <label>Nível</label>
+                                <select id="nivel" required>
+                                    <option value="Graduação">Graduação</option>
+                                    <option value="Mestrado">Mestrado</option>
+                                    <option value="Doutorado">Doutorado</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Prazo Estimado</label>
+                                <input type="text" id="prazo" placeholder="Ex: 30 dias" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Resumo do Desafio</label>
+                            <textarea id="resumo" style="height: 100px;" placeholder="Descreva brevemente sua necessidade..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Anexar Arquivo Inicial (Opcional - Máx 25MB)</label>
+                            <input type="file" id="fileInput" accept=".pdf,.docx,.zip">
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Enviar para Triagem</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+
+        <!-- MEUS DOCUMENTOS -->
+        <section style="margin: 4rem 0;">
+            <h2>Meus Documentos</h2>
+            <div class="card doc-list" id="globalDocList">
+                <div class="doc-item">Nenhum documento encontrado.</div>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { db, storage, auth } from './firebase-config.js';
+        import { collection, addDoc, query, where, getDocs, orderBy } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+        import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js";
+        import { getCurrentUser, logout } from './auth-cpf.js';
+
+        const user = getCurrentUser();
+        if (!user || user.role === 'admin') window.location.href = 'index.html';
+
+        document.getElementById('userName').innerText = user.nome;
+        document.getElementById('welcomeTitle').innerText = `Olá, ${user.nome.split(' ')[0]}!`;
+
+        window.handleLogout = logout;
+
+        async function loadDashboard() {
+            const projectList = document.getElementById('projectList');
+            projectList.innerHTML = '';
+
+            const q = query(collection(db, "projects"), where("clientId", "==", user.cpf), orderBy("createdAt", "desc"));
+            const querySnapshot = await getDocs(q);
+
+            if (querySnapshot.empty) {
+                projectList.innerHTML = '<div class="card">Você ainda não tem projetos. Solicite um ao lado!</div>';
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                const p = doc.data();
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <span class="status-badge status-triagem">${p.status}</span>
+                        <small class="text-muted">${p.createdAt.toDate().toLocaleDateString()}</small>
+                    </div>
+                    <h3 style="margin-bottom: 0.5rem;">${p.servicoInteresse}</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 1rem;">${p.resumoDesafio.substring(0, 100)}...</p>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Ver Detalhes</button>
+                        <a href="https://wa.me/5567993515206" target="_blank" class="btn btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Falar com Prof.</a>
+                    </div>
+                `;
+                projectList.appendChild(card);
+            });
+
+            // Load Docs
+            const docList = document.getElementById('globalDocList');
+            docList.innerHTML = '';
+            const dq = query(collection(db, "documents"), where("clientId", "==", user.cpf), orderBy("uploadedAt", "desc"));
+            const dSnap = await getDocs(dq);
+            dSnap.forEach(dDoc => {
+                const d = dDoc.data();
+                const item = document.createElement('div');
+                item.className = 'doc-item';
+                item.innerHTML = `
+                    <span><span class="material-symbols-outlined" style="vertical-align: middle; margin-right: 8px;">description</span>${d.fileName}</span>
+                    <a href="${d.fileUrl}" target="_blank" class="btn btn-outline" style="padding: 0.2rem 0.6rem; font-size: 0.75rem;">Download</a>
+                `;
+                docList.appendChild(item);
+            });
+        }
+
+        document.getElementById('newProjectForm').onsubmit = async (e) => {
+            e.preventDefault();
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            const file = document.getElementById('fileInput').files[0];
+            let fileUrl = '';
+            let fileName = '';
+
+            try {
+                const projectData = {
+                    clientId: user.cpf,
+                    servicoInteresse: document.getElementById('servico').value,
+                    nivelPesquisa: document.getElementById('nivel').value,
+                    prazoEntrega: document.getElementById('prazo').value,
+                    resumoDesafio: document.getElementById('resumo').value,
+                    status: 'triagem',
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                };
+
+                const projectRef = await addDoc(collection(db, "projects"), projectData);
+
+                if (file) {
+                    fileName = file.name;
+                    const storageRef = ref(storage, `clients/${user.cpf}/${projectRef.id}/${file.name}`);
+                    await uploadBytes(storageRef, file);
+                    fileUrl = await getDownloadURL(storageRef);
+                    
+                    await addDoc(collection(db, "documents"), {
+                        projectId: projectRef.id,
+                        clientId: user.cpf,
+                        fileName: file.name,
+                        fileUrl: fileUrl,
+                        uploadedAt: new Date()
+                    });
+                }
+
+                alert("Projeto enviado com sucesso! Aguarde contato em até 24h.");
+                e.target.reset();
+                loadDashboard();
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao enviar projeto. Tente novamente.");
+            } finally {
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        };
+
+        loadDashboard();
+    </script>
+</body>
+</html>
