@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="pt-BR" dir="ltr">
+<head>
+    <!-- GTM & Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17970604156"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17970604156');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0F172A">
+    <meta name="description" content="Guia Acadêmico - Consultoria Científica de Alto Ticket. Especialista em Análise de Dados, Metodologia e IA Acadêmica. Prof. Renato Rosa.">
+    <meta name="author" content="Prof. Renato Rosa">
+    <title>Guia Acadêmico | Mentoria Científica & Análise de Dados Avançada</title>
+
+    <!-- Typography & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- Meta Pixel -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SEU_NUMERO_DO_PIXEL_AQUI'); fbq('track', 'PageView');
+    </script>
+
+    <style>
+        /* ==========================================================================
+           1. DESIGN TOKENS (Variables)
+           ========================================================================== */
+        :root {
+            --primary: #0F172A;
+            --primary-light: #1E293B;
+            --accent: #EAB308;
+            --accent-hover: #CA8A04;
+            --success: #059669;
+            --error: #EF4444;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --bg-body: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --border: #E2E8F0;
+            
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 2rem;
+            --space-lg: 4rem;
+            --space-xl: 8rem;
+            
+            --font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        /* ==========================================================================
+           2. BASE STYLES
+           ========================================================================== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-family); 
+            background-color: var(--bg-body); 
+            color: var(--text-main); 
+            line-height: 1.6; 
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-weight: 700; line-height: 1.2; color: var(--primary); }
+        p { font-weight: 400; margin-bottom: 1rem; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; height: auto; object-fit: cover; overflow: hidden; display: block; }
+        
+        .container { 
+            width: 100%; 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 clamp(1rem, 5vw, 3rem); 
+        }
+
+        /* ==========================================================================
+           3. UI COMPONENTS
+           ========================================================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            border-radius: 6px;
+            gap: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+        }
+        .btn-primary { background: var(--primary); color: #fff; }
+        .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-accent { background: var(--accent); color: var(--primary); }
+        .btn-accent:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: var(--shadow); }
+        .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
+        .btn-outline:hover { background: var(--primary); color: #fff; }
+
+        .card {
+            background: var(--bg-card);
+            padding: var(--space-md);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin: 4px 2px;
+        }
+
+        /* ==========================================================================
+           4. HEADER
+           ========================================================================== */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; height: 80px; }
+        .logo img { height: 45px; width: auto; }
+        .footer-logo img { height: 60px; width: auto; margin-bottom: 1.5rem; }
+        .nav-links { display: none; }
+        @media (min-width: 1024px) {
+            .nav-links { display: flex; gap: 1.5rem; align-items: center; }
+            .nav-links a { font-weight: 500; font-size: 0.9rem; }
+            .nav-links a:hover { color: var(--accent); }
+        }
+        .mobile-menu-btn { display: block; @media (min-width: 1024px) { display: none; } }
+
+        /* ==========================================================================
+           5. SEÇÃO: HERO
+           ========================================================================== */
+        .hero { padding: 160px 0 80px; background: radial-gradient(circle at top right, #f8fafc 0%, #ffffff 100%); }
+        .hero-grid { display: grid; gap: 4rem; align-items: center; }
+        @media (min-width: 768px) { .hero-grid { grid-template-columns: 1.2fr 0.8fr; } }
+        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2.5rem; }
+        .hero-img-box { position: relative; }
+        .hero-img-box img { border-radius: 24px; box-shadow: var(--shadow); }
+        .hero-badge {
+            position: absolute; bottom: 40px; left: -20px;
+            background: #fff; padding: 1.5rem; border-radius: 16px;
+            box-shadow: var(--shadow); border-left: 6px solid var(--accent);
+            display: flex; gap: 1rem; align-items: center;
+        }
+        @media (max-width: 768px) { .hero-badge { display: none; } }
+
+        /* ==========================================================================
+           6. SEÇÃO: SERVIÇOS
+           ========================================================================== */
+        .services-grid { display: grid; gap: 1.5rem; }
+        @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+        .service-card h3 { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; font-size: 1.25rem; color: var(--primary); }
+        .service-card ul { padding-left: 1.2rem; }
+        .service-card li { margin-bottom: 0.5rem; font-size: 0.95rem; position: relative; }
+        .service-card li::before { content: "•"; color: var(--accent); position: absolute; left: -1.2rem; font-weight: bold; }
+
+        /* ==========================================================================
+           7. SEÇÃO: PREÇOS
+           ========================================================================== */
+        .pricing-table-wrapper { overflow-x: auto; margin-top: 3rem; background: #fff; border: 1px solid var(--border); border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        th { background: #f8fafc; text-align: left; padding: 1.5rem; border-bottom: 2px solid var(--border); font-weight: 700; color: var(--primary); }
+        td { padding: 1.5rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        .price-val { font-weight: 800; color: var(--primary); font-size: 1.1rem; }
+        .pricing-footer { margin-top: 2rem; padding: 1.5rem; background: #f1f5f9; border-radius: 8px; font-size: 0.9rem; text-align: center; }
+
+        /* ==========================================================================
+           8. SEÇÃO: METODOLOGIAS & FERRAMENTAS
+           ========================================================================== */
+        .methodology-grid { display: grid; gap: 2rem; }
+        @media (min-width: 768px) { .methodology-grid { grid-template-columns: repeat(2, 1fr); } }
+        .method-item { border-left: 4px solid var(--accent); padding-left: 1.5rem; }
+        .method-item h4 { text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted); }
+        .disclaimer-box { 
+            background: var(--primary); color: #fff; 
+            padding: 2.5rem; border-radius: 16px; 
+            margin-top: 4rem; text-align: center;
+            border: 4px solid var(--accent);
+        }
+
+        /* ==========================================================================
+           9. SEÇÃO: COMO FUNCIONA
+           ========================================================================== */
+        .steps-container { display: grid; gap: 3rem; counter-reset: step-counter; margin-top: 4rem; }
+        @media (min-width: 1024px) { .steps-container { grid-template-columns: repeat(3, 1fr); } }
+        .step-card { position: relative; text-align: center; }
+        .step-card::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            width: 60px; height: 60px; background: var(--accent); color: var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 800; margin: 0 auto 1.5rem;
+        }
+
+        /* ==========================================================================
+           10. RESULTADOS & MÉTRICAS
+           ========================================================================== */
+        .metrics-grid { display: grid; gap: 2rem; text-align: center; background: var(--primary); color: #fff; padding: 4rem; border-radius: 24px; }
+        @media (min-width: 768px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
+        .metric-item div:first-child { font-size: 3rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 0.5rem; }
+        .metric-item div:last-child { text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; font-weight: 600; }
+
+        /* ==========================================================================
+           11. FAQ
+           ========================================================================== */
+        .faq-wrapper { max-width: 800px; margin: 4rem auto 0; }
+        .faq-item { border-bottom: 1px solid var(--border); }
+        .faq-trigger { 
+            width: 100%; padding: 1.5rem 0; text-align: left; 
+            background: none; border: none; font-size: 1.1rem; 
+            font-weight: 600; display: flex; justify-content: space-between; 
+            align-items: center; cursor: pointer; color: var(--primary);
+        }
+        .faq-content { padding-bottom: 1.5rem; color: var(--text-muted); display: none; }
+        .faq-item.active .faq-content { display: block; }
+        .faq-item.active .material-symbols-outlined { transform: rotate(180deg); }
+
+        /* ==========================================================================
+           12. FORMULÁRIO DE QUALIFICAÇÃO
+           ========================================================================== */
+        .form-card { background: #fff; padding: clamp(2rem, 5vw, 4rem); border-radius: 24px; box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .form-grid { display: grid; gap: 1.5rem; }
+        @media (min-width: 768px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+        .form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+        label { font-weight: 600; font-size: 0.9rem; }
+        input, select, textarea { 
+            padding: 0.8rem 1rem; border: 1px solid var(--border); 
+            border-radius: 8px; font-family: inherit; font-size: 1rem; 
+            background: #f8fafc; transition: var(--transition);
+        }
+        input:focus, select:focus, textarea:focus { 
+            outline: none; border-color: var(--accent); background: #fff; 
+            box-shadow: 0 0 0 4px rgba(234, 179, 8, 0.1); 
+        }
+        .lgpd-checkbox { display: flex; gap: 12px; align-items: flex-start; font-size: 0.85rem; margin-top: 1rem; color: var(--text-muted); }
+        .lgpd-checkbox input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; }
+
+        /* ==========================================================================
+           13. FOOTER
+           ========================================================================== */
+        footer { background: var(--primary); color: #fff; padding: 120px 0 40px; margin-top: 100px; }
+        .footer-grid { display: grid; gap: 4rem; }
+        @media (min-width: 1024px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
+        .footer-bottom { margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1.5rem; font-size: 0.85rem; opacity: 0.7; }
+
+        /* ==========================================================================
+           14. ANIMATIONS
+           ========================================================================== */
+        [data-reveal] { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        [data-reveal].active { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+    <!-- HEADER: NAVEGAÇÃO -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="logo3d.png" alt="Guia Acadêmico Logo">
+            </a>
+            <nav class="nav-links">
+                <a href="#">Início</a>
+                <a href="#servicos">Serviços</a>
+                <a href="#precos">Preços</a>
+                <a href="#metodologias">Metodologias</a>
+                <a href="#como-funciona">Como Funciona</a>
+                <a href="#faq">FAQ</a>
+                <a href="#diagnostico" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">Solicitar Proposta</a>
+            </nav>
+            <button class="mobile-menu-btn btn">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <!-- SEÇÃO: HERO -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div data-reveal class="active">
+                    <span class="badge" style="background: var(--accent); color: var(--primary); margin-bottom: 1.5rem;">Consultoria Acadêmica Sênior</span>
+                    <h1>Pesquisa Científica com <span style="color: var(--accent);">Rigor e Autoridade</span>.</h1>
+                    <p>Orientação metodológica e análise de dados avançada para pesquisadores que buscam o mais alto nível de excelência acadêmica e sigilo total.</p>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <a href="#diagnostico" class="btn btn-primary">
+                            <span class="material-symbols-outlined">calendar_month</span>
+                            Agendar Diagnóstico
+                        </a>
+                        <a href="#precos" class="btn btn-outline">Ver Tabela de Preços</a>
+                    </div>
+                </div>
+                <div class="hero-img-box" data-reveal class="active">
+                    <img src="Renato.jpg" alt="Prof. Renato Rosa">
+                    <div class="hero-badge">
+                        <span class="material-symbols-outlined" style="font-size: 40px; color: var(--accent);">verified_user</span>
+                        <div>
+                            <div style="font-weight: 800; font-size: 1.1rem;">Prof. Renato Rosa</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">Doutorando & Consultor Sênior</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: SERVIÇOS -->
+        <section id="servicos" class="container" style="padding-top: var(--space-lg);">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto 4rem;" data-reveal>
+                <h2 style="font-size: 3rem;">Serviços de Consultoria Acadêmica</h2>
+                <p class="text-muted">Soluções técnicas e metodológicas para cada etapa da sua pesquisa.</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">account_tree</span> Orientação Metodológica</h3>
+                    <ul>
+                        <li>Estruturação de projetos (TCC, dissertações, teses)</li>
+                        <li>Definição de problema, objetivos e justificativa</li>
+                        <li>Revisão de literatura e referencial teórico</li>
+                        <li>Delineamento metodológico quali, quanti ou misto</li>
+                    </ul>
+                </div>
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">query_stats</span> Análise de Dados Estatística</h3>
+                    <ul>
+                        <li>Estatística descritiva e inferencial</li>
+                        <li>Regressões múltiplas, logísticas, multinomiais</li>
+                        <li>Painéis longitudinais e séries temporais</li>
+                        <li>Testes de hipóteses, ANOVA, MANOVA, fatoriais</li>
+                    </ul>
+                </div>
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">psychology</span> Análise Qualitativa Avançada</h3>
+                    <ul>
+                        <li>Análise de conteúdo (Bardin) e análise do discurso</li>
+                        <li>Grounded Theory, fenomenologia, estudo de caso</li>
+                        <li>Codificação aberta, axial e seletiva</li>
+                        <li>Triangulação de dados e validação por pares</li>
+                    </ul>
+                </div>
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">data_thresholding</span> Mineração & Web Scraping</h3>
+                    <ul>
+                        <li>Raspagem de portais acadêmicos e bases públicas</li>
+                        <li>Coleta via APIs, JSON, XML e HTML parsing</li>
+                        <li>Limpeza e normalização de datasets</li>
+                        <li>Automação de coleta recorrente</li>
+                    </ul>
+                </div>
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">auto_awesome</span> IA Acadêmica & NLP</h3>
+                    <ul>
+                        <li>Engenharia de prompts para revisão de literatura</li>
+                        <li>Extração de insights de PDFs e corpus textuais</li>
+                        <li>Topic modeling e classificação hierárquica</li>
+                        <li>Uso ético de LLMs com anti-plágio</li>
+                    </ul>
+                </div>
+                <div class="card service-card" data-reveal>
+                    <h3><span class="material-symbols-outlined">edit_note</span> Formatação & Submissão</h3>
+                    <ul>
+                        <li>Adequação ABNT, APA, Vancouver e periódicos</li>
+                        <li>Revisão de coesão e clareza acadêmica</li>
+                        <li>Tradução técnica EN↔PT internacional</li>
+                        <li>Preparação completa para bancas e slides</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: PREÇOS -->
+        <section id="precos" class="container" style="padding-top: var(--space-lg);">
+            <div style="text-align: center; max-width: 800px; margin: 0 auto;" data-reveal>
+                <h2 style="font-size: 3rem;">Investimento Transparente</h2>
+                <p class="text-muted">Valores de referência para serviços avulsos. Pacotes personalizados sob consulta.</p>
+            </div>
+
+            <div class="pricing-table-wrapper" data-reveal>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Escopo Típico</th>
+                            <th>Prazo Médio</th>
+                            <th>Valor Base</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="font-semibold">Orientação TCC Graduação</td>
+                            <td>4 encontros + revisão estrutural + ABNT</td>
+                            <td>30-45 dias</td>
+                            <td class="price-val">A partir de R$ 497</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Análise Estatística (Quanti)</td>
+                            <td>Limpeza + script + interpretação + relatório</td>
+                            <td>7-15 dias</td>
+                            <td class="price-val">A partir de R$ 897</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Análise Qualitativa (IRAMUTEQ)</td>
+                            <td>Codificação + CHD + grafos + relatório</td>
+                            <td>10-20 dias</td>
+                            <td class="price-val">A partir de R$ 1.297</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Mineração / Web Scraping</td>
+                            <td>Definição de fonte + script + dataset limpo</td>
+                            <td>5-10 dias</td>
+                            <td class="price-val">A partir de R$ 697</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Mentoria IA Acadêmica (Sessão)</td>
+                            <td>1h de capacitação prática + material</td>
+                            <td>1 sessão</td>
+                            <td class="price-val">R$ 297/sessão</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Revisão Técnica Avulsa</td>
+                            <td>Leitura crítica + parecer estruturado</td>
+                            <td>3-5 dias</td>
+                            <td class="price-val">A partir de R$ 397</td>
+                        </tr>
+                        <tr>
+                            <td class="font-semibold">Pacote Mestrado / Doutorado</td>
+                            <td>Acompanhamento contínuo + análises + defesa</td>
+                            <td>Sob consulta</td>
+                            <td class="price-val" style="color: var(--accent);">Personalizado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="pricing-footer" data-reveal>
+                💡 Valores de referência para serviços avulsos. A maioria dos projetos é negociada sob medida conforme complexidade, prazo e volume de entregas. <a href="#diagnostico" class="font-semibold" style="border-bottom: 2px solid var(--accent);">Solicite uma proposta personalizada</a>.
+            </div>
+        </section>
+
+        <!-- SEÇÃO: METODOLOGIAS & FERRAMENTAS -->
+        <section id="metodologias" class="container" style="padding-top: var(--space-lg);">
+            <div style="text-align: center; margin-bottom: 4rem;" data-reveal>
+                <h2 style="font-size: 3rem;">Arsenal Metodológico</h2>
+            </div>
+
+            <div class="methodology-grid">
+                <div class="method-item" data-reveal>
+                    <h4>QUANTITATIVA</h4>
+                    <p>Econometria aplicada, regressões, painéis, séries temporais, ANOVA/MANOVA, análise fatorial, SEM.</p>
+                    <div>
+                        <span class="badge">STATA</span> <span class="badge">R (tidyverse)</span> <span class="badge">Python</span> <span class="badge">SPSS</span> <span class="badge">EViews</span>
+                    </div>
+                </div>
+                <div class="method-item" data-reveal>
+                    <h4>QUALITATIVA</h4>
+                    <p>Análise de conteúdo, grounded theory, fenomenologia, etnografia, análise do discurso.</p>
+                    <div>
+                        <span class="badge">IRAMUTEQ</span> <span class="badge">NVivo</span> <span class="badge">Atlas.ti</span> <span class="badge">MAXQDA</span> <span class="badge">Lexicometria</span>
+                    </div>
+                </div>
+                <div class="method-item" data-reveal>
+                    <h4>MINERAÇÃO & SCRAPING</h4>
+                    <p>Raspagem de portais acadêmicos (SciELO, CAPES), diários oficiais, bases governamentais e APIs.</p>
+                    <div>
+                        <span class="badge">BeautifulSoup</span> <span class="badge">Scrapy</span> <span class="badge">Selenium</span> <span class="badge">Playwright</span> <span class="badge">Requests</span>
+                    </div>
+                </div>
+                <div class="method-item" data-reveal>
+                    <h4>IA & NLP</h4>
+                    <p>Tokenização, lematização, extração de entidades, topic modeling (LDA), sentiment analysis.</p>
+                    <div>
+                        <span class="badge">spaCy</span> <span class="badge">HuggingFace</span> <span class="badge">Gensim</span> <span class="badge">Textometry</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer-box" data-reveal>
+                <p style="font-size: 1.25rem; font-weight: 700;">Não executamos trabalhos por terceiros.</p>
+                <p style="opacity: 0.9; margin-top: 0.5rem;">Atuamos exclusivamente em orientação metodológica, capacitação técnica, análise de dados e revisão estrutural, com rigor ético e conformidade acadêmica.</p>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: COMO FUNCIONA -->
+        <section id="como-funciona" class="container" style="padding-top: var(--space-lg);">
+            <div style="text-align: center; margin-bottom: 4rem;" data-reveal>
+                <h2 style="font-size: 3rem;">Como Funciona a Mentoria</h2>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card" data-reveal>
+                    <h3>Diagnóstico</h3>
+                    <p class="text-muted">Análise profunda da sua demanda, objetivos e prazos acadêmicos.</p>
+                </div>
+                <div class="step-card" data-reveal>
+                    <h3>Cronograma + Proposta</h3>
+                    <p class="text-muted">Apresentação da trilha de orientação personalizada e orçamento técnico.</p>
+                </div>
+                <div class="step-card" data-reveal>
+                    <h3>Acompanhamento</h3>
+                    <p class="text-muted">Sessões técnicas e acesso à Área do Cliente para acompanhamento até a entrega.</p>
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 4rem; flex-wrap: wrap;" data-reveal>
+                <a href="[LINK_CALENDLY]" class="btn btn-primary">Agendar Sessão de Diagnóstico</a>
+                <a href="[LINK_AREA_CLIENTE]" class="btn btn-outline">Acessar Área do Aluno</a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: RESULTADOS & MÉTRICAS -->
+        <section class="container" style="padding-top: var(--space-lg);">
+            <div class="metrics-grid" data-reveal>
+                <div class="metric-item">
+                    <div>+120</div>
+                    <div>Trabalhos Orientados</div>
+                </div>
+                <div class="metric-item">
+                    <div>94%</div>
+                    <div>Aprovação na 1ª Banca</div>
+                </div>
+                <div class="metric-item">
+                    <div>100%</div>
+                    <div>Conformidade LGPD</div>
+                </div>
+                <div class="metric-item">
+                    <div>10+</div>
+                    <div>Anos de Experiência</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: FAQ -->
+        <section id="faq" class="container" style="padding-top: var(--space-lg);">
+            <div style="text-align: center;" data-reveal>
+                <h2 style="font-size: 3rem;">Dúvidas Frequentes</h2>
+            </div>
+            <div class="faq-wrapper">
+                <div class="faq-item" data-reveal>
+                    <button class="faq-trigger">
+                        É plágio se vocês me orientam?
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </button>
+                    <div class="faq-content">
+                        Não. Existe uma diferença clara entre coautoria ilegal e mentoria ética. Nós fornecemos suporte metodológico, análise de dados e revisão. Você é o autor; nós somos o seu suporte técnico para garantir o rigor científico.
+                    </div>
+                </div>
+                <div class="faq-item" data-reveal>
+                    <button class="faq-trigger">
+                        Como é feito o sigilo dos meus dados?
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </button>
+                    <div class="faq-content">
+                        Seguimos a LGPD. Assinamos NDAs digitais e seus dados não são armazenados em nuvens públicas. Garantimos criptografia e sigilo absoluto sobre seu tema e pesquisa.
+                    </div>
+                </div>
+                <div class="faq-item" data-reveal>
+                    <button class="faq-trigger">
+                        Vocês fazem a análise pronta ou me ensinam?
+                        <span class="material-symbols-outlined">expand_more</span>
+                    </button>
+                    <div class="faq-content">
+                        Entregamos o script (R, STATA, Python) comentado e realizamos sessões de capacitação para que VOCÊ domine a lógica e possa defender os resultados na banca com segurança.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO: FORMULÁRIO DE QUALIFICAÇÃO -->
+        <section id="diagnostico" class="container" style="padding-top: var(--space-lg);">
+            <div class="form-card" data-reveal>
+                <div style="margin-bottom: 3rem;">
+                    <h2>Formulário de Qualificação Acadêmica</h2>
+                    <p class="text-muted">Preencha os dados abaixo para receber uma proposta personalizada em até 24h.</p>
+                </div>
+                <form onsubmit="enviarLead(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nome Completo</label>
+                            <input type="text" id="nome" required placeholder="Ex: Renato Rosa">
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail Acadêmico / Pessoal</label>
+                            <input type="email" id="email" required placeholder="exemplo@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>WhatsApp (com DDD)</label>
+                            <input type="tel" id="whatsapp" required placeholder="(00) 00000-0000">
+                        </div>
+                        <div class="form-group">
+                            <label>Serviço de Interesse</label>
+                            <select id="servico" required>
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Orientação Metodológica">Orientação Metodológica</option>
+                                <option value="Análise de Dados Estatística">Análise de Dados Estatística</option>
+                                <option value="Análise Qualitativa">Análise Qualitativa Avançada</option>
+                                <option value="Web Scraping">Mineração & Web Scraping</option>
+                                <option value="IA Acadêmica">IA Acadêmica & NLP</option>
+                                <option value="Formatação">Formatação & Submissão</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nível da Pesquisa</label>
+                            <select id="nivel" required>
+                                <option value="" disabled selected>Selecione...</option>
+                                <option value="Graduação">Graduação</option>
+                                <option value="Mestrado">Mestrado</option>
+                                <option value="Doutorado">Doutorado</option>
+                                <option value="Pós-Doc">Pós-Doutorado</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Prazo Real de Entrega</label>
+                            <input type="text" id="prazo" required placeholder="Ex: 15 de Dezembro de 2024">
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 1.5rem;">
+                        <label>Resumo do Desafio Acadêmico</label>
+                        <textarea id="mensagem" style="height: 120px;" required placeholder="Conte brevemente sobre seu tema e suas principais dificuldades..."></textarea>
+                    </div>
+
+                    <div class="lgpd-checkbox">
+                        <input type="checkbox" id="lgpd" required>
+                        <label for="lgpd">Concordo com a <a href="[LINK_POLITICA_PRIVACIDADE]" style="color: var(--primary); text-decoration: underline;">Política de Privacidade</a> e autorizo o uso dos dados para fins de elaboração da proposta técnica, em conformidade com a LGPD.</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 2.5rem; font-size: 1.1rem;">
+                        <span class="material-symbols-outlined">send</span>
+                        Solicitar Proposta em 24h
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- LEAD MAGNET -->
+        <section class="container" style="padding-top: var(--space-lg); text-align: center;">
+            <div style="background: var(--accent); padding: 4rem; border-radius: 24px; position: relative; z-index: 5; margin-bottom: -100px;">
+                <h2 style="font-size: 2rem; margin-bottom: 1rem;">Acelere sua Escrita Acadêmica</h2>
+                <p style="margin-bottom: 2rem;">Baixe o Checklist ABNT 2024 + Cronograma de TCC em 6 meses gratuitamente.</p>
+                <form onsubmit="baixarMagnet(event)" style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; max-width: 500px; margin: 0 auto;">
+                    <input type="email" id="email_magnet" placeholder="Seu melhor e-mail" required style="flex: 1; min-width: 250px;">
+                    <button type="submit" class="btn btn-primary">Receber Guia</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <div class="footer-logo">
+                    <img src="logo3d.png" alt="Guia Acadêmico Logo">
+                </div>
+                <p style="opacity: 0.8; font-size: 0.95rem;">Consultoria Científica de Alto Ticket. Especialista em Análise de Dados, Econometria e Metodologia da Pesquisa. Atendimento personalizado para pesquisadores de elite.</p>
+            </div>
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em;">Links Rápidos</h4>
+                <ul style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem; opacity: 0.9;">
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#precos">Preços</a></li>
+                    <li><a href="#metodologias">Metodologias</a></li>
+                    <li><a href="#faq">Dúvidas Frequentes</a></li>
+                    <li><a href="[LINK_AREA_CLIENTE]">Área do Aluno</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="color: var(--accent); margin-bottom: 1.5rem; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em;">Contato</h4>
+                <ul style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem; opacity: 0.9;">
+                    <li>WhatsApp: 5567993515206</li>
+                    <li>E-mail: gestor.renatorosa@gmail.com</li>
+                    <li>CNPJ: 00.000.000/0001-00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <div>&copy; 2026 Guia Acadêmico. Todos os direitos reservados. Cerrado Finanças e Gestão Empresarial LTDA.</div>
+            <div>Desenvolvido com Rigor Científico.</div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT MÍNIMO -->
+    <script>
+        // Reveal Animation on Scroll
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('active');
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Lead Submit
+        function enviarLead(e) {
+            e.preventDefault();
+            const dados = {
+                nome: document.getElementById('nome').value,
+                whatsapp: document.getElementById('whatsapp').value,
+                servico: document.getElementById('servico').value,
+                nivel: document.getElementById('nivel').value,
+                prazo: document.getElementById('prazo').value
+            };
+            
+            if (typeof fbq === 'function') fbq('track', 'Lead');
+            
+            // Simulação de envio para WhatsApp
+            const texto = `Olá Prof. Renato! Tenho interesse na Mentoria Acadêmica. 
+            Nome: ${dados.nome}
+            Serviço: ${dados.servico}
+            Nível: ${dados.nivel}
+            Prazo: ${dados.prazo}`;
+            
+            window.open(`https://wa.me/5567993515206?text=${encodeURIComponent(texto)}`, '_blank');
+        }
+
+        function baixarMagnet(e) {
+            e.preventDefault();
+            alert("Sucesso! O link para download do material foi enviado para o seu e-mail.");
+            window.open('[LINK_LEADMAGNET]', '_blank');
+        }
+    </script>
+</body>
+</html>

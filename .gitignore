@@ -1,0 +1,12 @@
+# OS Metadata
+.DS_Store
+Thumbs.db
+
+# Backups and Temp files
+*_backup.html
+*.tmp
+*.log
+
+# Git local config (optional)
+.vscode/
+.idea/
