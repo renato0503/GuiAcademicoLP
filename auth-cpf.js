@@ -1,9 +1,7 @@
 // auth-cpf.js
-import { auth, db } from './firebase-config.js';
+import { auth, db, ADMIN_CPF } from './firebase-config.js';
 import { doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 import { signInAnonymously } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-
-const ADMIN_CPF = '05930662193';
 
 /**
  * Realiza o login simplificado via CPF para o MVP.
