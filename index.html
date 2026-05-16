@@ -314,7 +314,7 @@
                 <a href="#como-funciona">Como Funciona</a>
                 <a href="#faq">FAQ</a>
                 <div id="userSection" style="display: flex; align-items: center; gap: 1rem;">
-                    <button id="loginBtn" class="btn btn-outline" style="padding: 0.6rem 1.2rem;">Área do Aluno</button>
+                    <button id="loginBtn" class="btn btn-outline open-login" style="padding: 0.6rem 1.2rem;">Área do Aluno</button>
                     <a href="#diagnostico" class="btn btn-primary" style="padding: 0.6rem 1.2rem;">Solicitar Proposta</a>
                 </div>
             </nav>
@@ -582,7 +582,7 @@
 
             <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 4rem; flex-wrap: wrap;" data-reveal>
                 <a href="[LINK_CALENDLY]" class="btn btn-primary">Agendar Sessão de Diagnóstico</a>
-                <a href="[LINK_AREA_CLIENTE]" class="btn btn-outline">Acessar Área do Aluno</a>
+                <a href="#" class="btn btn-outline open-login">Acessar Área do Aluno</a>
             </div>
         </section>
 
@@ -740,7 +740,7 @@
                     <li><a href="#precos">Preços</a></li>
                     <li><a href="#metodologias">Metodologias</a></li>
                     <li><a href="#faq">Dúvidas Frequentes</a></li>
-                    <li><a href="[LINK_AREA_CLIENTE]">Área do Aluno</a></li>
+                    <li><a href="#" class="open-login">Área do Aluno</a></li>
                 </ul>
             </div>
             <div>
@@ -820,9 +820,15 @@
             const newUserFields = document.getElementById('newUserFields');
             const loginForm = document.getElementById('cpfLoginForm');
 
-            if (loginBtn) {
-                loginBtn.onclick = () => modal.style.display = "block";
-            }
+            const openModal = (e) => {
+                if (e) e.preventDefault();
+                modal.style.display = "block";
+            };
+
+            document.querySelectorAll('.open-login').forEach(btn => {
+                btn.addEventListener('click', openModal);
+            });
+
             closeBtn.onclick = () => modal.style.display = "none";
             window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
 
