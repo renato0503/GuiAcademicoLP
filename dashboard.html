@@ -57,7 +57,13 @@
 
     <header>
         <div class="container header-content">
-            <a href="index.html" class="logo"><img src="logo3d.png" alt="Logo"></a>
+            <a href="index.html" class="logo" style="text-decoration: none; display: flex; align-items: center;">
+                <svg width="220" height="30" viewBox="0 0 220 30" xmlns="http://www.w3.org/2000/svg">
+                    <text x="0" y="24" font-family="'Inter', sans-serif" font-weight="800" font-size="22" fill="#0F172A">
+                        GUIA <tspan fill="#EAB308">ACADÊMICO</tspan>
+                    </text>
+                </svg>
+            </a>
             <div style="display: flex; gap: 1rem; align-items: center;">
                 <span id="userName" style="font-weight: 600;">Carregando...</span>
                 <button onclick="handleLogout()" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.8rem;">Sair</button>
